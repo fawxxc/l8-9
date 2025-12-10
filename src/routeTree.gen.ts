@@ -9,38 +9,73 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OwnersRouteImport } from './routes/owners'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnersNewRouteImport } from './routes/owners.new'
+import { Route as OwnersOwnerIdRouteImport } from './routes/owners/$ownerId'
 
+const OwnersRoute = OwnersRouteImport.update({
+  id: '/owners',
+  path: '/owners',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnersNewRoute = OwnersNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => OwnersRoute,
+} as any)
+const OwnersOwnerIdRoute = OwnersOwnerIdRouteImport.update({
+  id: '/$ownerId',
+  path: '/$ownerId',
+  getParentRoute: () => OwnersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/owners': typeof OwnersRouteWithChildren
+  '/owners/$ownerId': typeof OwnersOwnerIdRoute
+  '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/owners': typeof OwnersRouteWithChildren
+  '/owners/$ownerId': typeof OwnersOwnerIdRoute
+  '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/owners': typeof OwnersRouteWithChildren
+  '/owners/$ownerId': typeof OwnersOwnerIdRoute
+  '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
+  id: '__root__' | '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OwnersRoute: typeof OwnersRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/owners': {
+      id: '/owners'
+      path: '/owners'
+      fullPath: '/owners'
+      preLoaderRoute: typeof OwnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +83,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owners/new': {
+      id: '/owners/new'
+      path: '/new'
+      fullPath: '/owners/new'
+      preLoaderRoute: typeof OwnersNewRouteImport
+      parentRoute: typeof OwnersRoute
+    }
+    '/owners/$ownerId': {
+      id: '/owners/$ownerId'
+      path: '/$ownerId'
+      fullPath: '/owners/$ownerId'
+      preLoaderRoute: typeof OwnersOwnerIdRouteImport
+      parentRoute: typeof OwnersRoute
+    }
   }
 }
 
+interface OwnersRouteChildren {
+  OwnersOwnerIdRoute: typeof OwnersOwnerIdRoute
+  OwnersNewRoute: typeof OwnersNewRoute
+}
+
+const OwnersRouteChildren: OwnersRouteChildren = {
+  OwnersOwnerIdRoute: OwnersOwnerIdRoute,
+  OwnersNewRoute: OwnersNewRoute,
+}
+
+const OwnersRouteWithChildren =
+  OwnersRoute._addFileChildren(OwnersRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OwnersRoute: OwnersRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
