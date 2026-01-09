@@ -9,14 +9,57 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SetPasswordRouteImport } from './routes/set-password'
 import { Route as OwnersRouteImport } from './routes/owners'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as Doctor_medicineRouteImport } from './routes/doctor_medicine'
+import { Route as Doctor_listRouteImport } from './routes/doctor_list'
+import { Route as DoctorRouteImport } from './routes/doctor'
+import { Route as CreatorRouteImport } from './routes/creator'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnersNewRouteImport } from './routes/owners.new'
 import { Route as OwnersOwnerIdRouteImport } from './routes/owners/$ownerId'
+import { Route as Doctor_listOwnerIdRouteImport } from './routes/doctor_list.$ownerId'
 
+const SetPasswordRoute = SetPasswordRouteImport.update({
+  id: '/set-password',
+  path: '/set-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OwnersRoute = OwnersRouteImport.update({
   id: '/owners',
   path: '/owners',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Doctor_medicineRoute = Doctor_medicineRouteImport.update({
+  id: '/doctor_medicine',
+  path: '/doctor_medicine',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Doctor_listRoute = Doctor_listRouteImport.update({
+  id: '/doctor_list',
+  path: '/doctor_list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoctorRoute = DoctorRouteImport.update({
+  id: '/doctor',
+  path: '/doctor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorRoute = CreatorRouteImport.update({
+  id: '/creator',
+  path: '/creator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -34,46 +77,168 @@ const OwnersOwnerIdRoute = OwnersOwnerIdRouteImport.update({
   path: '/$ownerId',
   getParentRoute: () => OwnersRoute,
 } as any)
+const Doctor_listOwnerIdRoute = Doctor_listOwnerIdRouteImport.update({
+  id: '/$ownerId',
+  path: '/$ownerId',
+  getParentRoute: () => Doctor_listRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/creator': typeof CreatorRoute
+  '/doctor': typeof DoctorRoute
+  '/doctor_list': typeof Doctor_listRouteWithChildren
+  '/doctor_medicine': typeof Doctor_medicineRoute
+  '/login': typeof LoginRoute
   '/owners': typeof OwnersRouteWithChildren
+  '/set-password': typeof SetPasswordRoute
+  '/doctor_list/$ownerId': typeof Doctor_listOwnerIdRoute
   '/owners/$ownerId': typeof OwnersOwnerIdRoute
   '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/creator': typeof CreatorRoute
+  '/doctor': typeof DoctorRoute
+  '/doctor_list': typeof Doctor_listRouteWithChildren
+  '/doctor_medicine': typeof Doctor_medicineRoute
+  '/login': typeof LoginRoute
   '/owners': typeof OwnersRouteWithChildren
+  '/set-password': typeof SetPasswordRoute
+  '/doctor_list/$ownerId': typeof Doctor_listOwnerIdRoute
   '/owners/$ownerId': typeof OwnersOwnerIdRoute
   '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/creator': typeof CreatorRoute
+  '/doctor': typeof DoctorRoute
+  '/doctor_list': typeof Doctor_listRouteWithChildren
+  '/doctor_medicine': typeof Doctor_medicineRoute
+  '/login': typeof LoginRoute
   '/owners': typeof OwnersRouteWithChildren
+  '/set-password': typeof SetPasswordRoute
+  '/doctor_list/$ownerId': typeof Doctor_listOwnerIdRoute
   '/owners/$ownerId': typeof OwnersOwnerIdRoute
   '/owners/new': typeof OwnersNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/creator'
+    | '/doctor'
+    | '/doctor_list'
+    | '/doctor_medicine'
+    | '/login'
+    | '/owners'
+    | '/set-password'
+    | '/doctor_list/$ownerId'
+    | '/owners/$ownerId'
+    | '/owners/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
-  id: '__root__' | '/' | '/owners' | '/owners/$ownerId' | '/owners/new'
+  to:
+    | '/'
+    | '/admin'
+    | '/creator'
+    | '/doctor'
+    | '/doctor_list'
+    | '/doctor_medicine'
+    | '/login'
+    | '/owners'
+    | '/set-password'
+    | '/doctor_list/$ownerId'
+    | '/owners/$ownerId'
+    | '/owners/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/creator'
+    | '/doctor'
+    | '/doctor_list'
+    | '/doctor_medicine'
+    | '/login'
+    | '/owners'
+    | '/set-password'
+    | '/doctor_list/$ownerId'
+    | '/owners/$ownerId'
+    | '/owners/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  CreatorRoute: typeof CreatorRoute
+  DoctorRoute: typeof DoctorRoute
+  Doctor_listRoute: typeof Doctor_listRouteWithChildren
+  Doctor_medicineRoute: typeof Doctor_medicineRoute
+  LoginRoute: typeof LoginRoute
   OwnersRoute: typeof OwnersRouteWithChildren
+  SetPasswordRoute: typeof SetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/set-password': {
+      id: '/set-password'
+      path: '/set-password'
+      fullPath: '/set-password'
+      preLoaderRoute: typeof SetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/owners': {
       id: '/owners'
       path: '/owners'
       fullPath: '/owners'
       preLoaderRoute: typeof OwnersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor_medicine': {
+      id: '/doctor_medicine'
+      path: '/doctor_medicine'
+      fullPath: '/doctor_medicine'
+      preLoaderRoute: typeof Doctor_medicineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor_list': {
+      id: '/doctor_list'
+      path: '/doctor_list'
+      fullPath: '/doctor_list'
+      preLoaderRoute: typeof Doctor_listRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doctor': {
+      id: '/doctor'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof DoctorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator': {
+      id: '/creator'
+      path: '/creator'
+      fullPath: '/creator'
+      preLoaderRoute: typeof CreatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -97,8 +262,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnersOwnerIdRouteImport
       parentRoute: typeof OwnersRoute
     }
+    '/doctor_list/$ownerId': {
+      id: '/doctor_list/$ownerId'
+      path: '/$ownerId'
+      fullPath: '/doctor_list/$ownerId'
+      preLoaderRoute: typeof Doctor_listOwnerIdRouteImport
+      parentRoute: typeof Doctor_listRoute
+    }
   }
 }
+
+interface Doctor_listRouteChildren {
+  Doctor_listOwnerIdRoute: typeof Doctor_listOwnerIdRoute
+}
+
+const Doctor_listRouteChildren: Doctor_listRouteChildren = {
+  Doctor_listOwnerIdRoute: Doctor_listOwnerIdRoute,
+}
+
+const Doctor_listRouteWithChildren = Doctor_listRoute._addFileChildren(
+  Doctor_listRouteChildren,
+)
 
 interface OwnersRouteChildren {
   OwnersOwnerIdRoute: typeof OwnersOwnerIdRoute
@@ -115,7 +299,14 @@ const OwnersRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  CreatorRoute: CreatorRoute,
+  DoctorRoute: DoctorRoute,
+  Doctor_listRoute: Doctor_listRouteWithChildren,
+  Doctor_medicineRoute: Doctor_medicineRoute,
+  LoginRoute: LoginRoute,
   OwnersRoute: OwnersRouteWithChildren,
+  SetPasswordRoute: SetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

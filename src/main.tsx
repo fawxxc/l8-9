@@ -6,6 +6,9 @@ import { routeTree } from "./routeTree.gen.ts";
 import "./styles/tailwind.css";
 import "./common/i18n";
 
+// 🔹 Додаємо AuthProvider
+import { AuthProvider } from "@/features/auth/AuthContext";
+
 const router = createRouter({ routeTree });
 
 export type TanstackRouter = typeof router;
@@ -18,13 +21,16 @@ declare module "@tanstack/react-router" {
 }
 
 const rootElement = document.querySelector("#root") as Element;
+
 if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<React.StrictMode>
-			<React.Suspense fallback="loading">
-				<App router={router} />
-			</React.Suspense>
+			<AuthProvider>
+				<React.Suspense fallback="loading">
+					<App router={router} />
+				</React.Suspense>
+			</AuthProvider>
 		</React.StrictMode>
 	);
 }
